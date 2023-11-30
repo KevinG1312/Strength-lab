@@ -9,6 +9,7 @@ export default function  OneRepMaxCalc(weight, reps) {
     }
     
     else {
-    let OneRepMax = weight * (1 + (reps / 30 ));
-    return Math.round(OneRepMax)};
+    const calculatedOneRepMax = Math.round(weight * (36 / (37 - reps)));
+    return calculatedOneRepMax
+    };
 }
