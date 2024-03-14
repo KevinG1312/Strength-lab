@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import OneRepMaxCalc from './GenericOneRepMaxCalculator';
 import { getStrengthLevel } from './StrengthAnalysis';
 
+//calculates One Rep Max for each exercise and returns strength
 const Exercise = ({ name, onCalculate, userData }) => {
   const [weight, setWeight] = useState('');
   const [reps, setReps] = useState('');
@@ -9,7 +10,7 @@ const Exercise = ({ name, onCalculate, userData }) => {
   const [strengthLevel, setStrengthLevel] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const handleCalculate = () => {
+  const handleCalculate = async () => {
     try {
       const parsedWeight = parseInt(weight, 10);
       const parsedReps = parseInt(reps, 10);
@@ -26,7 +27,11 @@ const Exercise = ({ name, onCalculate, userData }) => {
       }
 
       const result = OneRepMaxCalc(parsedWeight, parsedReps);
-      setCalculatedMax(result);
+    if (typeof result !== 'number') {
+      throw new Error('OneRepMaxCalc did not return a numeric value.');
+    }
+
+    setCalculatedMax(result);
 
       const strengthLevelResult = getStrengthLevel(name, result, userData.sex, userData.bodyWeight, userData.units);
       setStrengthLevel(strengthLevelResult);

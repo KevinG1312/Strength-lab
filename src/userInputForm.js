@@ -7,7 +7,7 @@ const UserInputForm = ({ onUserInput }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUserInput({ bodyWeight, sex, units }); // Pass an object with user input data
+    onUserInput({ bodyWeight, sex, units }); 
   };
 
   return (
@@ -39,3 +39,4 @@ const UserInputForm = ({ onUserInput }) => {
 };
 
 export default UserInputForm;
+

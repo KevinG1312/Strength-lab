@@ -1,4 +1,4 @@
-
+//Strength Tables for each exercises for male and female.
 
 export const womensBenchPressTable = [
     { 'Body Weight': 44, Untrained: 22.5, Novice: 30.0, Intermediate: 35.0, Advanced: 42.5, Elite: 52.5 },

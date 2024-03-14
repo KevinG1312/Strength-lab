@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Test</title>
+  <!-- Include your jsPDF library -->
+  <script src="strength-app/node_modules/jspdf/dist/jspdf.min.js"></script>
+
+</head>
+<body>
+  <div id="pdfContent"></div>
+  <script>
+    // Your jsPDF content generation code here
+    const doc = new jsPDF();
+    const testHTML = '<p>Hello world!</p>';
+    doc.fromHTML(testHTML, 20, 30);
+
+    // Add more content and styling as needed
+
+    // Save the PDF
+    doc.save('test_document.pdf');
+  </script>
+</body>
+</html>

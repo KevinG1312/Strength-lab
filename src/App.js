@@ -1,10 +1,9 @@
 import React from 'react';
-import OneRepMaxApp from './OneRepMaxApp';
-import Exercise from './ExerciseOneRepMaxCalc';
-import OneRepMaxCalc from './GenericOneRepMaxCalculator';
 import Header from './Header';
+import jsPDF from 'jspdf';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+console.log('jsPDF:', jsPDF); // Log jsPDF to the console
 
 function App() {
   return (

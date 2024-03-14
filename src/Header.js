@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Tabs, Tab } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Tab, Tabs } from 'react-bootstrap';
+import HowtoAbout from './HowToAbout';
 import OneRepMaxApp from './OneRepMaxApp';
-import Exercise from './ExerciseOneRepMaxCalc';
+import RoutineGenerator from './RoutineGenerator';
+import { StrengthAnalysis } from './StrengthAnalysis';
 import UserInputForm from './userInputForm';
-import { getStrengthLevel } from './StrengthAnalysis';
-import OneRepMaxCalc from './GenericOneRepMaxCalculator';
 
 const Header = () => {
   const [userData, setUserData] = useState({
@@ -15,36 +15,6 @@ const Header = () => {
 
   const handleUserInput = (data) => {
     setUserData(data);
-  };
-
-  useEffect(() => {
-    // This effect will run whenever userData is updated
-    const calculateStrengthLevels = async () => {
-      for (const exercise of exercises) {
-        const calculatedMax = await OneRepMaxCalc(exercise); // Use your appropriate function to get the calculated max
-        handleCalculateStrengthLevel(exercise, calculatedMax);
-      }
-    };
-    calculateStrengthLevels();
-  }, [userData]);
-
-  const exercises = ["Bench Press", "Deadlift", "Overhead Press", "Squat", "Bent Over Row"];
-  const [strengthLevels, setStrengthLevels] = useState({});
-
-  const handleCalculateStrengthLevel = (exercise, calculatedMax) => {
-    console.log('Exercise:', exercise);
-    console.log('Body Weight:', userData.bodyWeight);
-    console.log('Sex:', userData.sex);
-    console.log('Units:', userData.units);
-    console.log('calculatedMax:', calculatedMax);
-    // Calculate strength level using getStrengthLevel function
-    const strengthLevel = getStrengthLevel(exercise, userData.bodyWeight, userData.sex, userData.units);
-
-    // Store the strength level in state
-    setStrengthLevels((prevStrengthLevels) => ({
-      ...prevStrengthLevels,
-      [exercise]: strengthLevel,
-    }));
   };
 
   const headerStyle = {
@@ -71,32 +41,27 @@ const Header = () => {
       </div>
       <Tabs defaultActiveKey="oneRepMax" id="header-tabs">
         <Tab eventKey="oneRepMax" title="One Rep Max Calculator">
+          <h3>Please enter weight and reps of your best set to estimate your one rep max</h3>
           {<OneRepMaxApp />}
         </Tab>
         <Tab eventKey="strengthAnalysis" title="Strength Analysis">
           <>
+          <h3>Please select sex, units, and enter your bodyweight </h3>
+          <h3>Then enter your best weight and reps for each exercise</h3>
             <UserInputForm onUserInput={handleUserInput} />
-            {exercises.map((exercise) => (
-              <Exercise
-                key={exercise}
-                name={exercise}
-                onCalculate={(exercise, calculatedMax) => handleCalculateStrengthLevel(exercise, calculatedMax)}
-                userData={userData} // Make sure to pass userData to Exercise
-              />
-            ))}
-            {Object.entries(strengthLevels).map(([exercise, strengthLevel]) => (
-              <div key={exercise}>
-                <p>{`${exercise} Strength Level: ${typeof strengthLevel === 'number' ? strengthLevel : 'Not available'}`}</p>
-              </div>
-            ))}
+            <StrengthAnalysis userData={userData} />
           </>
         </Tab>
         <Tab eventKey="routineGenerator" title="Routine Generator">
-          {/* Content for Routine Generator tab */}
+          <h3>Please enter your best weight and reps lifted</h3>
+          <h3>and select a routine and units</h3>
+          <h3>             Weight x Reps</h3>
+          <RoutineGenerator />
         </Tab>
         <Tab eventKey="howToAbout" title="How To/About">
-          {/* Content for How To/About tab */}
-        </Tab>
+        <HowtoAbout />
+          </Tab>
+        
       </Tabs>
     </div>
   );
